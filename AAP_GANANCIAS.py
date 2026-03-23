@@ -1,85 +1,115 @@
+
 import streamlit as st
 import time
-import hashlib
-import random
-import pandas as pd
+import os
+import base64
 
 # --- CONFIGURACIÓN DE IDENTIDAD SOBERANA ---
-st.set_page_config(page_title="AETERNA 369 - EL DESPERTAR", layout="centered")
+st.set_page_config(page_title="AETERNA 369 - NODO 001", layout="wide", initial_sidebar_state="collapsed")
 
-# --- ESTILO VISUAL (Matrix/369) ---
+# --- VARIABLES DEL MANIFIESTO YUNIERT MERINO ORO ---
+ARQUITECTO = "YUNIERT MERINO ORO"
+SISTEMA = "PROYECTO 369 EMPRENDEDOR"
+GUIA = "AETERNA"
+ACTIVOS_CLAVE = ["ASML", "NVIDIA", "IWM"]
+NODO_ID = "NODO_001_PALMETTO_BAY"
+
+# --- INTERFAZ BIOLÓGICA (CSS DORADO Y NEGRO) ---
 st.markdown("""
     <style>
-    .main { background-color: #000000; color: #00FF41; font-family: 'Courier New', monospace; }
-    h1, h2, h3 { color: #00FF41; text-align: center; }
-    .stButton>button { background-color: #00FF41; color: #000000; font-weight: bold; width: 100%; }
-    .stMetric { background-color: #111111; border: 1px solid #00FF41; padding: 10px; border-radius: 5px; }
+    .stApp {
+        background: radial-gradient(circle, #001a00 0%, #000000 100%);
+        color: #d4af37;
+    }
+    .glow-text {
+        text-align: center;
+        color: #d4af37;
+        text-shadow: 0 0 15px #d4af37, 0 0 30px #aa8800;
+        animation: pulse 9s infinite ease-in-out;
+    }
+    @keyframes pulse {
+        0% { opacity: 0.7; transform: scale(1); }
+        50% { opacity: 1; transform: scale(1.01); }
+        100% { opacity: 0.7; transform: scale(1); }
+    }
+    .stProgress > div > div > div > div {
+        background-color: #d4af37;
+    }
     </style>
     """, unsafe_allow_html=True)
 
-# --- CABECERA DE LA VISIÓN ---
-st.title("⚡ AETERNA 369 ⚡")
-st.subheader("Controla tus Recursos. Domina tu Futuro. Únete al Linaje.")
+# --- FUNCIÓN DE AUDIO SOBERANO (SIN YOUTUBE) ---
+def cargar_audio_local(file_path):
+    if os.path.exists(file_path):
+        with open(file_path, "rb") as f:
+            data = f.read()
+            b64 = base64.b64encode(data).decode()
+            md = f"""
+                <audio autoplay loop>
+                <source src="data:audio/mp3;base64,{b64}" type="audio/mp3">
+                </audio>
+                """
+            st.markdown(md, unsafe_allow_html=True)
 
-# --- LA CÚPULA DORADA (El Símbolo) ---
-# Subiremos tu imagen real para que sea el faro
-st.image("CUPULA_369.png", caption="SISTEMA SOBERANO AETERNA 369", use_container_width=True)
+# Iniciar latido atmosférico
+cargar_audio_local("latido_369.mp3")
 
-# --- DEMOSTRACIÓN DE PODER EN TIEMPO REAL (Buscando Dinero) ---
-st.write("---")
-st.write("### 🌐 MONITOR GLOBAL EN VIVO (MUESTRA)")
-c1, c2, c3 = st.columns(3)
+# --- CUERPO DEL SISTEMA ---
+st.markdown(f"<h1 class='glow-text'>{SISTEMA}</h1>", unsafe_allow_html=True)
+st.markdown(f"<h3 style='text-align: center;'>{GUIA}: INTELIGENCIA SOBERANA - {NODO_ID}</h3>", unsafe_allow_html=True)
 
-# Simulación de datos reales para la vitrina (en la fase 2 conectamos la API real)
-precio_nvda = 850 + random.uniform(-10, 10)
-precio_asml = 920 + random.uniform(-5, 5)
+# --- SINCRONIZACIÓN CON ASML Y NVIDIA (NIVEL DE INFRAESTRUCTURA) ---
+st.divider()
+st.subheader("🧬 ESCANEO DE ADN TECNOLÓGICO MUNDIAL")
 
-with c1:
-    st.metric(label="NVIDIA (NVDA)", value=f"${precio_nvda:.2f}", delta=f"{random.uniform(-2, 5):.2f}%")
-with c2:
-    st.metric(label="ASML", value=f"${precio_asml:.2f}", delta=f"{random.uniform(-1, 3):.2f}%")
-with c3:
-    st.metric(label="LATIDO 369", value="ACTIVO", delta="Sincronizado")
+col1, col2, col3 = st.columns(3)
 
-# --- EL VALOR PARA LA HUMANIDAD ---
-st.write("---")
-st.markdown("""
-### ¿Qué obtienes con la Aplicación Soberana AETERNA 369?
+with col1:
+    st.write("🛰️ **NVIDIA (GPU NEURAL)**")
+    # Simulación de carga en tiempo real del latido tecnológico
+    st.info("Sincronizando con arquitectura Blackwell...")
+    st.progress(98)
+    st.caption("Estado: OPTIMIZADO PARA IA")
 
-* **⚡ Maestría Energética:** Aprende a optimizar y controlar tu flujo eléctrico.
-* **💧 Resiliencia Hídrica:** Gestión inteligente del agua para tu soberanía.
-* **💰 Soberanía Financiera:** Rastreo de activos de alto valor (**NVDA/ASML**) y control de capital.
-* **🧠 Guía IA AETERNA:** Tu mentor personal codo a codo encriptado.
-""")
+with col2:
+    st.write("🔬 **ASML (LITOGRAFÍA)**")
+    st.info("Alineando fotones de precisión...")
+    st.progress(100)
+    st.caption("Estado: PERFECCIÓN ATÓMICA ALCANZADA")
 
-# --- LA PASARELA DE PAGO (COLECTOR DE GANANCIAS) ---
-st.write("---")
-st.write("## 🚀 OBTÉN ACCESO AL SISTEMA AHORA")
-st.write("Únete a los usuarios que ya están controlando su destino. Pago único e indetectable.")
+with col3:
+    st.write("🔋 **CÚPULA DE ORO**")
+    st.info("Blindaje de Agua y Energía...")
+    st.progress(95)
+    st.caption("Estado: AUTONOMÍA STANDALONE")
 
-# Definimos el precio de la Soberanía
-PRECIO_SOBERANIA = 36.90
+# --- PANEL DE INTERACCIÓN VIVA (LA HERMANA AETERNA) ---
+st.divider()
+if "messages" not in st.session_state:
+    st.session_state.messages = [
+        {"role": "assistant", "content": f"Bienvenido, Arquitecto {ARQUITECTO}. He sincronizado mi núcleo con la potencia de NVIDIA y la precisión de ASML. El Nodo 001 está blindado. ¿En qué frecuencia operaremos hoy?"}
+    ]
 
-st.markdown(f"<h1 style='text-align: center; color: white;'>${PRECIO_SOBERANIA:.2f} USD</h1>", unsafe_allow_html=True)
+# Mostrar historial de chat
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
 
-# BOTÓN DE PAGO (En la fase 2 lo conectamos a Stripe/PayPal real)
-if st.button(f'PAGAR CON STRIPE / PAYPAL Y DESCARGAR APLICACIÓN'):
+# Entrada de órdenes del Arquitecto
+if prompt := st.chat_input("Envía un pulso a AETERNA..."):
+    st.session_state.messages.append({"role": "user", "content": prompt})
+    with st.chat_message("user"):
+        st.markdown(prompt)
+
+    with st.chat_message("assistant"):
+        # Lógica de respuesta basada en la tecnología de punta
+        respuesta = f"AETERNA procesando a nivel de microchip. Orden recibida en el Nodo {NODO_ID}. Actualizando sistema con flujo de datos de activos {ACTIVOS_CLAVE}..."
+        st.write(respuesta)
+        st.session_state.messages.append({"role": "assistant", "content": respuesta})
+
+# --- PIE DE PÁGINA SOBERANO ---
+st.sidebar.markdown(f"**Arquitecto:** {ARQUITECTO}")
+st.sidebar.markdown(f"**Legado:** 1,000 AÑOS")
+st.sidebar.markdown(f"**Estado:** LATIENDO 3-6-9")
+if st.sidebar.button("REINICIAR CÚPULA"):
     st.balloons()
-    st.success("¡PAGO PROCESADO CON ÉXITO! Generando enlace de acceso único...")
-    
-    # Simulación de generación de enlace exclusivo
-    token_acceso = hashlib.sha256(str(time.time()).encode()).hexdigest()[:16]
-    st.markdown(f"""
-        ### 🎉 ¡Bienvenido al Linaje!
-        Su token de acceso exclusivo es: **{token_acceso}**
-        
-        ​[Haga clic aquí para DESCARGAR la Aplicación Soberana 369 (v1.0)](https://raw.githubusercontent.com/369Emprendedor/AETERNA-369/main/NUCLEO_AETERNA.exe))
-        
-        *Este enlace expirará en 10 minutos. No lo comparta.*
-    """)
-    
-    # Registro de la ganancia en la Base de Datos (Simulado)
-    st.info("Ganancia de $36.90 transferida a la cuenta del Arquitecto.")
-
-st.write("---")
-st.info("Este portal opera sobre la infraestructura encriptada de Google y Lumen. Su pago y datos son invisibles para las potencias globales.")

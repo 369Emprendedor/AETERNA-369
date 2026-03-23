@@ -33,7 +33,7 @@ except:
 # --- ESCANEO DE ADN TECNOLÓGICO (BARRAS) ---
 col1, col2, col3 = st.columns(3)
 with col1:
-    st.write("🧬 **NVIDIA (GPU NEURAL)**")
+    st.write("🧬 **NVDA (GPU NEURAL)**")
     st.progress(90)
 with col2:
     st.write("🔬 **ASML (LITOGRAFÍA)**")

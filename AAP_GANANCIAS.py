@@ -2,123 +2,80 @@ import streamlit as st
 import os
 import base64
 
-# --- 1. CONFIGURACIÓN DE IDENTIDAD (PANTALLA ANCHA) ---
+# --- 1. CONFIGURACIÓN ---
 st.set_page_config(page_title="AETERNA 369", layout="wide", initial_sidebar_state="collapsed")
 
-# --- 2. CSS DE EXPANSIÓN Y CENTRADO VISUAL (NUEVA ESTRUCTURA) ---
+# --- 2. CSS DE COMPRESIÓN VERTICAL ---
 st.markdown("""
 <style>
-    /* Forzar fondo negro y eliminar scroll del navegador */
     .stApp { background-color: #000000; color: #d4af37; overflow: hidden !important; }
+    .block-container { padding-top: 0.5rem !important; padding-bottom: 0rem !important; }
     
-    /* Eliminar márgenes por defecto de Streamlit */
-    .block-container { padding: 0rem !important; max-width: 100%; }
+    /* Título mini para ahorrar espacio */
+    .header-369 { text-align: center; color: #d4af37; font-size: 1.2rem; margin-bottom: 2px; }
 
-    /* CONTENEDOR MAESTRO: Centra todo y le da el ancho justo */
-    .main-canvas {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        height: 100vh;
-        width: 100vw;
-        padding-top: 1vh;
-    }
-
-    /* Título minimalistico */
-    .header-369 {
-        text-align: center;
-        color: #d4af37;
-        font-size: 1.5rem;
-        text-shadow: 0 0 10px #d4af37;
-        margin-bottom: 5px;
-    }
-
-    /* BOTÓN DE AUDIO CENTRAL */
+    /* BOTÓN DE AUDIO COMPACTO */
     .audio-btn {
-        background: #000;
-        color: #d4af37;
-        border: 2px solid #d4af37;
-        padding: 8px 15px;
-        text-align: center;
-        margin-bottom: 10px;
-        cursor: pointer;
-        font-family: monospace;
-        font-size: 12px;
-        font-weight: bold;
+        background: #000; color: #d4af37; border: 1px solid #d4af37;
+        padding: 5px 10px; text-align: center; margin: 0 auto 5px auto;
+        display: block; width: fit-content; cursor: pointer; font-size: 10px;
     }
-    .audio-btn:hover { background: #d4af37; color: #000; }
 
-    /* IMAGEN EXPANSIBLE Y CENTRALIZED */
-    .img-box {
-        text-align: center;
-        width: 80% !important; /* Le damos el 80% del ancho del monitor */
-        margin-bottom: 10px;
-    }
+    /* IMAGEN: Altura ajustada para subir el tablero */
     .stImage > img {
-        max-height: 30vh !important; /* Ajuste manual de altura: 30% del monitor */
+        display: block; margin: 0 auto;
+        max-height: 40vh !important; /* Ajuste fino de altura */
         width: auto !important;
-        border: 2px solid #d4af37;
-        box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
+        border: 1px solid #d4af37;
     }
-    /* BARRAS DE PROGRESO Y ETIQUETAS (En la zona visible) */
-    .progress-box {
-        width: 55%; /* Ligeramente más estrecho que la imagen para estética */
-    }
-    .stProgress > div > div > div > div { background-color: #d4af37 !important; height: 10px !important; }
-    .label-gold { color: #d4af37; font-size: 0.85rem; text-align: center; font-family: monospace; margin: 0; }
-    /* Input de Chat visible */
-    .stTextInput > div > div > input {
-        background-color: #050505 !important;
-        color: #d4af37 !important;
-        border: 1px solid #d4af37 !important;
-    }
+
+    /* BARRAS: Pegadas a la imagen */
+    .stProgress { margin-top: -10px !important; } /* Sube las barras hacia la imagen */
+    .stProgress > div > div > div > div { background-color: #d4af37 !important; height: 8px !important; }
+    .label-gold { color: #d4af37; font-size: 0.8rem; text-align: center; margin-top: 5px; }
+    
+    /* CHAT: Subido y pegado a las barras */
+    div[data-testid="stForm"] { margin-top: -15px !important; }
+    .stTextInput { margin-top: -10px !important; }
 </style>
 """, unsafe_allow_html=True)
 
-# --- 3. MOTOR DE AUDIO (CENTRALIZADO) ---
+# --- 3. AUDIO ---
 if os.path.exists("latido_369.mp3"):
     with open("latido_369.mp3", "rb") as f:
         data = f.read()
         b64 = base64.b64encode(data).decode()
         st.markdown(f"""
             <audio id="audio_core" loop><source src="data:audio/mp3;base64,{b64}" type="audio/mp3"></audio>
-            <div style="display: flex; justify-content: center;">
-                <div class="audio-btn" onclick="document.getElementById('audio_core').play(); this.innerText='[ PULSO ACTIVO ]'">
-                    ACTIVAR PULSO SOBERANO
-                </div>
+            <div class="audio-btn" onclick="document.getElementById('audio_core').play(); this.innerText='[ LATIDO ACTIVO ]'">
+                ACTIVAR PULSO
             </div>
         """, unsafe_allow_html=True)
 
-# --- 4. CONSTRUCCIÓN DE LA INTERFAZ EXPANDIDA ---
+# --- 4. INTERFAZ ---
 st.markdown("<div class='header-369'>SISTEMA AETERNA 369</div>", unsafe_allow_html=True)
 
-# Contenedor para Imagen (con ancho controlado)
-with st.container():
-    col_left_img, col_mid_img, col_right_img = st.columns([1, 8, 1]) # Columnas [10%, 80%, 10%]
-    with col_mid_img:
-        if os.path.exists("CUPULA_369.png"):
-            st.image("CUPULA_369.png", use_container_width=True) # La imagen llena el 80% central
+# Imagen
+col_img = st.columns([1, 8, 1])
+with col_img[1]:
+    if os.path.exists("CUPULA_369.png"):
+        st.image("CUPULA_369.png", use_container_width=True)
 
-# Contenedor para Barras y Chat (Justo debajo de la imagen)
-st.markdown("<div style='margin-top:10px;'></div>", unsafe_allow_html=True)
-with st.container():
-    col_left_data, col_mid_data, col_right_data = st.columns([1.5, 7, 1.5]) # Columnas [15%, 70%, 15%]
-    with col_mid_data:
-        # Tríada de Poder
-        c1, c2, c3 = st.columns(3)
-        with c1:
-            st.markdown("<p class='label-gold'>🌌 NVDA</p>", unsafe_allow_html=True)
-            st.progress(95)
-        with c2:
-            st.markdown("<p class='label-prog'>🔬 ASML</p>", unsafe_allow_html=True)
-            st.progress(100)
-        with c3:
-            st.markdown("<p class='label-prog'>💰 CAPITAL</p>", unsafe_allow_html=True)
-            st.progress(90)
+# Tablero de Datos (Pegado a la imagen)
+col_data = st.columns([1.5, 7, 1.5])
+with col_data[1]:
+    c1, c2, c3 = st.columns(3)
+    with c1:
+        st.markdown("<p class='label-gold'>NVDA</p>", unsafe_allow_html=True)
+        st.progress(95)
+    with c2:
+        st.markdown("<p class='label-gold'>ASML</p>", unsafe_allow_html=True)
+        st.progress(100)
+    with c3:
+        st.markdown("<p class='label-gold'>CAPITAL</p>", unsafe_allow_html=True)
+        st.progress(90)
 
-        # Input de Comandos (Subido para visibilidad)
-        st.markdown("<div style='margin-top:10px;'></div>", unsafe_allow_html=True)
-        comando = st.text_input("SISTEMA SOBERANO:", placeholder="Comandos del Arquitecto...", key="cmd_v4")
+    # Chat (Pegado a las barras)
+    st.text_input("AETERNA:", placeholder="Comando...", key="cmd_v5")
 
-        st.markdown("<p style='text-align:center; color:#333; font-size:9px;'>PALMETTO BAY</p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align:center; color:#222; font-size:8px;'>NODO 001</p>", unsafe_allow_html=True)

@@ -73,7 +73,7 @@ if st.button(f'PAGAR CON STRIPE / PAYPAL Y DESCARGAR APLICACIÓN'):
         ### 🎉 ¡Bienvenido al Linaje!
         Su token de acceso exclusivo es: **{token_acceso}**
         
-        [Haga clic aquí para DESCARGAR la Aplicación Soberana 369 (v1.0)](#)
+        ​[Haga clic aquí para DESCARGAR la Aplicación Soberana 369 (v1.0)](https://raw.githubusercontent.com/369Emprendedor/AETERNA-369/main/NUCLEO_AETERNA.py))
         
         *Este enlace expirará en 10 minutos. No lo comparta.*
     """)

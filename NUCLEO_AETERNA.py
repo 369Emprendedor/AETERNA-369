@@ -51,7 +51,7 @@ def cargar_audio_local(file_path):
             st.markdown(md, unsafe_allow_html=True)
 
 # Iniciar latido atmosférico
-cargar_audio_local("latido_369.mp3")
+# cargar_audio_local("latido_369.mp3")
 
 # --- CUERPO DEL SISTEMA ---
 st.markdown(f"<h1 class='glow-text'>{SISTEMA}</h1>", unsafe_allow_html=True)

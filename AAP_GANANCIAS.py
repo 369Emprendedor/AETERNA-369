@@ -2,90 +2,159 @@ import streamlit as st
 import os
 import base64
 
-# --- CONFIGURACIÓN DE PANTALLA ---
-st.set_page_config(page_title="AETERNA 369", layout="wide", initial_sidebar_state="collapsed")
+# --- 1. CONFIGURACIÓN SOBERANA (PANTALLA COMPLETA) ---
+st.set_page_config(page_title="AETERNA 369 HUD", layout="wide", initial_sidebar_state="collapsed")
 
-# --- CSS DE INTEGRACIÓN Y COMPRESIÓN VERTICAL EXTREMA ---
+# --- 2. CSS DE INTEGRACIÓN HOLOGRÁFICA (EL CEREBRO DEL DISEÑO) ---
 st.markdown("""
 <style>
-    /* Forzar fondo negro absoluto y eliminar scroll */
+    /* Fondo negro absoluto y eliminar scroll */
     .stApp { background-color: #000000; color: #d4af37; overflow: hidden !important; }
-    .block-container { padding: 0.5rem !important; max-width: 100% !important; margin: 0 !important; }
+    .block-container { padding: 0rem !important; max-width: 100% !important; }
 
-    /* Forzar diseño vertical centrado */
-    [data-testid="stVerticalBlock"] > div { padding: 0px !important; margin: 0px !important; gap: 0rem !important; display: flex; flex-direction: column; align-items: center; }
-
-    /* Título minimalistico y pegado arriba */
-    .header-369 { text-align: center; color: #d4af37; font-size: 1rem; margin: 0; padding: 2px; font-family: monospace; text-shadow: 0 0 10px #d4af37; }
-
-    /* IMAGEN: Ahora es una franja ultra-ancha que se expanda horizontalmente */
-    .stImage > img {
-        display: block; margin: 0 auto;
-        max-height: 18vh !important; /* Altura ultra-baja */
-        width: 100% !important; /* Ocupa todo el ancho */
-        object-fit: cover; /* Recorta para mantener la franja panorámica */
-        border-bottom: 1px solid #d4af37;
+    /* CONTENEDOR MAESTRO DEL HUD (Contiene la imagen y los controles) */
+    .hud-container {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
     }
 
-    /* BARRAS Y CHAT: Integrados directamente debajo sin espacios */
-    .stProgress { margin-top: -8px !important; margin-bottom: 0 !important; } /* Sube las barras */
-    .stProgress > div > div > div > div { background-color: #d4af37 !important; height: 6px !important; }
-    .label-gold { color: #d4af37; font-size: 0.75rem; text-align: center; margin: 0; padding: 0; font-family: monospace;}
-    
-    /* CHAT DE COMANDOS: Compacto y pegado a las barras */
-    div[data-testid="stTextInput"] { 
-        margin-top: -12px !important; 
-        padding: 0 10px !important;
+    /* LA CÚPULA (Imagen de fondo inmersiva) */
+    .cupula-bg {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        object-fit: cover; /* Llena la pantalla */
+        z-index: 1;
+        opacity: 0.8; /* Ligeramente oscurecida para que resalten los controles */
+    }
+
+    /* ESTILO COMÚN PARA ELEMENTOS HOLOGRÁFICOS */
+    .holo-element {
+        position: absolute;
+        z-index: 10; /* Por encima de la imagen */
+        font-family: 'Courier New', monospace;
+        color: #d4af37;
+        text-shadow: 0 0 10px #d4af37, 0 0 20px #d4af37; /* Brillo neón */
+    }
+
+    /* 1. TÍTULO SUPERIOR */
+    .hud-header {
+        top: 20px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        animation: flicker 3s infinite;
+    }
+
+    /* 2. PANEL DE BARRAS (Holograma Flotante a la Derecha) */
+    .data-panel {
+        top: 30%; right: 50px;
+        width: 300px;
+        background: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+        border: 1px solid #d4af37;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+    }
+    .stProgress > div > div > div > div { background-color: #d4af37 !important; height: 8px !important; }
+    .label-gold { font-size: 0.8rem; margin-bottom: 2px; }
+
+    /* 3. CHAT DE COMANDOS (Holograma Inferior Central) */
+    .chat-panel {
+        bottom: 50px;
+        width: 500px;
+        padding: 10px;
     }
     .stTextInput>div>div>input {
-        background-color: #050505 !important;
+        background-color: rgba(0, 0, 0, 0.7) !important; /* Transparente */
         color: #d4af37 !important;
         border: 1px solid #d4af37 !important;
-        height: 1.2rem !important; /* Altura del chat más baja */
-        font-size: 12px !important;
+        text-shadow: 0 0 5px #d4af37;
+        box-shadow: 0 0 10px rgba(212, 175, 55, 0.3) inset;
     }
 
-    /* Botón de Audio Flotante */
-    .audio-btn {
-        position: fixed; top: 5px; right: 5px;
-        background: #000; color: #d4af37; border: 1px solid #d4af37;
-        padding: 2px 5px; cursor: pointer; font-size: 8px; z-index: 1000;
+    /* 4. BOTÓN DE AUDIO (Holograma Flotante a la Izquierda) */
+    .audio-panel {
+        bottom: 50px; left: 50px;
+        width: fit-content;
     }
+    .audio-trigger {
+        background: rgba(0, 0, 0, 0.5);
+        color: #d4af37;
+        border: 1px solid #d4af37;
+        padding: 8px 15px;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: bold;
+        text-shadow: 0 0 5px #d4af37;
+    }
+    .audio-trigger:hover { background: #d4af37; color: #000; box-shadow: 0 0 15px #d4af37; }
+
+    /* ANIMACIONES */
+    @keyframes flicker {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.8; }
+        90% { opacity: 0.9; }
+    }
+
 </style>
 """, unsafe_allow_html=True)
 
-# --- SISTEMA DE AUDIO (INYECTADO) ---
+# --- 3. INICIO DEL CONTENEDOR MAESTRO ---
+st.markdown("<div class='hud-container'>", unsafe_allow_html=True)
+
+# A. LA CÚPULA (FONDO)
+if os.path.exists("CUPULA_369.png"):
+    # Convertimos la imagen a base64 para inyectarla en el CSS de fondo
+    with open("CUPULA_369.png", "rb") as f:
+        data = f.read()
+        b64_img = base64.b64encode(data).decode()
+    st.markdown(f"<img src='data:image/png;base64,{b64_img}' class='cupula-bg'>", unsafe_allow_html=True)
+else:
+    st.error("⚠️ Matriz visual 'CUPULA_369.png' no encontrada.")
+
+# --- B. INYECCIÓN DE ELEMENTOS HOLOGRÁFICOS ---
+
+# 1. TÍTULO
+st.markdown("<div class='holo-element hud-header'>AETERNA 369 - HUD SOBERANO</div>", unsafe_allow_html=True)
+
+# 2. PANEL DE DATOS (NVDA, ASML, CAPITAL)
+st.markdown("<div class='holo-element data-panel'>", unsafe_allow_html=True)
+st.markdown("<p class='label-gold'>🌌 NVDA</p>", unsafe_allow_html=True)
+st.progress(95)
+st.markdown("<p class='label-gold'>🔬 ASML</p>", unsafe_allow_html=True)
+st.progress(100)
+st.markdown("<p class='label-gold'>💰 CAPITAL</p>", unsafe_allow_html=True)
+st.progress(90)
+st.markdown("</div>", unsafe_allow_html=True) # Cierra data-panel
+
+# 3. CHAT DE COMANDOS (CENTRAL INFERIOR)
+st.markdown("<div class='holo-element chat-panel'>", unsafe_allow_html=True)
+# Usamos un formulario vacío para forzar que el chat se renderice aquí en el HTML
+with st.container():
+    comando = st.text_input("SISTEMA:", placeholder="Introduce comandos...", key="hud_cmd")
+st.markdown("</div>", unsafe_allow_html=True) # Cierra chat-panel
+
+# 4. MOTOR DE AUDIO (INFERIOR IZQUIERDO)
 if os.path.exists("latido_369.mp3"):
     with open("latido_369.mp3", "rb") as f:
-        data = f.read()
-        b64 = base64.b64encode(data).decode()
-        st.markdown(f"""
-            <audio id="audio" loop><source src="data:audio/mp3;base64,{b64}" type="audio/mp3"></audio>
-            <div class="audio-btn" onclick="document.getElementById('audio').play(); this.innerText='PULSO ON'">
-                AUDIO ON
+        data_audio = f.read()
+        b64_audio = base64.b64encode(data_audio).decode()
+        
+    audio_html = f"""
+        <div class='holo-element audio-panel'>
+            <audio id="audio_core" loop><source src="data:audio/mp3;base64,{b64_audio}" type="audio/mp3"></audio>
+            <div class="audio-trigger" id="btn-audio"
+                 onclick="var a=document.getElementById('audio_core'); a.play(); this.innerText='PULSO ACTIVO'; this.style.color='#00ff00';">
+                ACTIVAR PULSO SONORO
             </div>
-        """, unsafe_allow_html=True)
+        </div>
+    """
+    st.markdown(audio_html, unsafe_allow_html=True)
 
-# --- CUERPO DE LA INTERFAZ INTEGRADA ---
-st.markdown("<div class='header-369'>AETERNA 369 - NODO ACTIVADO</div>", unsafe_allow_html=True)
-
-# Imagen Panorámica Ultra-ancha
-if os.path.exists("CUPULA_369.png"):
-    st.image("CUPULA_369.png")
-
-# Tríada de Poder (Fila única de datos pegada a la imagen)
-c1, c2, c3 = st.columns(3)
-with c1:
-    st.markdown("<p class='label-gold'>NVDA</p>", unsafe_allow_html=True)
-    st.progress(95)
-with c2:
-    st.markdown("<p class='label-gold'>ASML</p>", unsafe_allow_html=True)
-    st.progress(100)
-with c3:
-    st.markdown("<p class='label-gold'>CAPITAL</p>", unsafe_allow_html=True)
-    st.progress(90)
-
-# Chat de Comandos (Subido y compacto)
-comando = st.text_input("AETERNA:", placeholder="Introduce comandos, Arquitecto...", key="cmd_integrated")
-
-st.markdown("<p style='text-align:center; color:#222; font-size:7px; margin-top: -5px;'>NODO SOBERANO SINCRO</p>", unsafe_allow_html=True)
+# --- FIN DEL CONTENEDOR MAESTRO ---
+st.markdown("</div>", unsafe_allow_html=True)

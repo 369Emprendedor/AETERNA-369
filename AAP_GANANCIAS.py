@@ -21,7 +21,7 @@ st.markdown("""
 
     /* IMAGEN: Aquí es donde ajustamos para que no tape las barras */
     .stImage > img {
-        max-height: 42vh !important; /* Solo ocupa el 42% de la altura del monitor */
+        max-height: 35vh !important; /* Solo ocupa el 42% de la altura del monitor */
         width: auto !important;
         border: 1px solid #d4af37;
         box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);

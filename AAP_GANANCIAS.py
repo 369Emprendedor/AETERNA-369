@@ -2,81 +2,89 @@ import streamlit as st
 import os
 import base64
 
-# --- CONFIGURACIÓN DE PANTALLA COMPACTA (UNA SOLA VISTA) ---
+# --- CONFIGURACIÓN DE PANTALLA ---
 st.set_page_config(page_title="AETERNA 369", layout="wide", initial_sidebar_state="collapsed")
 
-# --- CSS DE PRECISIÓN PARA ELIMINAR SCROLL ---
+# --- CSS DE CONTROL TOTAL (CENTRADO Y AJUSTADO) ---
 st.markdown("""
 <style>
-    /* 1. Eliminar márgenes y forzar altura completa del monitor */
-    .block-container { 
-        padding-top: 1rem !important; 
-        padding-bottom: 0rem !important; 
-        padding-left: 2rem !important; 
-        padding-right: 2rem !important; 
-        height: 100vh !important;
+    /* Forzar fondo negro y eliminar scroll */
+    .stApp { background-color: #000000; color: #d4af37; overflow: hidden !important; }
+    .block-container { padding: 0rem !important; max-width: 100%; }
+
+    /* Centrado de todo el contenido */
+    .main-canvas {
         display: flex;
         flex-direction: column;
-        justify-content: flex-start;
-        overflow: hidden !important; /* Desactiva el scroll */
-    }
-    
-    /* 2. Estilo de Fondo y Título */
-    .stApp { background-color: #000000; color: #d4af37; overflow: hidden !important; }
-    .glow-title { 
-        text-align: center; 
-        color: #d4af37; 
-        font-size: 20px !important; /* Título más pequeño */
-        text-shadow: 0 0 10px #d4af37; 
-        margin-bottom: 5px !important;
-        margin-top: 0px !important;
-    }
-    
-    /* 3. CONTROL TOTAL DE LA IMAGEN (AQUÍ ESTÁ LA CLAVE) */
-    .stImage { 
-        text-align: center; 
-        margin-top: 0px !important;
-        margin-bottom: 5px !important;
-    }
-    .stImage > img { 
-        max-height: 40vh !important; /* Obliga a la imagen a medir solo el 40% de la altura de la pantalla */
-        width: auto !important; /* Mantiene la proporción */
-        margin-left: auto; 
-        margin-right: auto; 
-        border: 1px solid #d4af37;
-        box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        width: 100vw;
     }
 
-    /* 4. Estilo de barras y chat compactos */
-    div[data-testid="stColumn"] p { font-size: 12px !important; margin-bottom: 0px !important; }
-    .stTextInput>div>div>input { background-color: #111; color: #d4af37; border: 1px solid #d4af37; font-size: 12px !important; }
-    .stProgress > div > div > div > div { background-color: #d4af37; height: 10px !important; }
+    /* Título minimalista */
+    .header-gold {
+        color: #d4af37;
+        font-size: 1.5rem;
+        text-shadow: 0 0 10px #d4af37;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    /* IMAGEN: Ajuste dinámico al monitor */
+    .centered-img {
+        max-height: 50vh !important; /* Toma la mitad de la pantalla */
+        border: 2px solid #d4af37;
+        box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+        margin-bottom: 20px;
+    }
+
+    /* Barras de progreso compactas */
+    .stProgress > div > div > div > div { background-color: #d4af37 !important; }
+    .label-gold { color: #d4af37; font-size: 0.8rem; font-weight: bold; margin-bottom: 2px; }
 </style>
 """, unsafe_allow_html=True)
 
-# --- TÍTULO Y AUDIO DESACTIVADO TEMPORALMENTE ---
-st.markdown("<h1 class='glow-title'>SISTEMA AETERNA 369 - NODO 001</h1>", unsafe_allow_html=True)
+# --- MOTOR DE AUDIO (CON BOTÓN DE ACTIVACIÓN MANUAL) ---
+if os.path.exists("latido_369.mp3"):
+    with open("latido_369.mp3", "rb") as f:
+        data = f.read()
+        b64 = base64.b64encode(data).decode()
+        st.markdown(f"""
+            <audio id="audio" loop><source src="data:audio/mp3;base64,{b64}" type="audio/mp3"></audio>
+            <div onclick="document.getElementById('audio').play()" style="position:fixed; top:10px; right:10px; color:#d4af37; cursor:pointer; border:1px solid #d4af37; padding:5px; z-index:1000; font-size:10px;">
+                [ ACTIVAR PULSO ]
+            </div>
+        """, unsafe_allow_html=True)
 
-# --- IMAGEN REDIMENSIONADA (AQUÍ CORRE LA IMAGEN) ---
-if os.path.exists("CUPULA_369.png"):
-    st.image("CUPULA_369.png", use_container_width=False) # False para que no ocupe todo el ancho
-else:
-    st.warning("⚠️ Cargando matriz visual de la Cúpula...")
+# --- ESTRUCTURA VISUAL CENTRADA ---
+st.markdown("<h1 class='header-gold'>SISTEMA AETERNA 369 - NODO 001</h1>", unsafe_allow_html=True)
 
-# --- LA TRÍADA DE PODER (COMPACTA) ---
-col1, col2, col3 = st.columns(3)
-with col1:
-    st.markdown("<p style='text-align:center;'>🌌 NVDA</p>", unsafe_allow_html=True)
-    st.progress(95)
-with col2:
-    st.markdown("<p style='text-align:center;'>🔬 ASML</p>", unsafe_allow_html=True)
-    st.progress(100)
-with col3:
-    st.markdown("<p style='text-align:center;'>💰 CAPITAL</p>", unsafe_allow_html=True)
-    st.progress(90)
+# Columna central para agrupar imagen y barras
+_, col_main, _ = st.columns([1, 2, 1])
 
-# --- CHAT AETERNA (VISIBLE Y COMPACTO) ---
-st.markdown("<div style='margin-top: 5px;'></div>", unsafe_allow_html=True) # Pequeño espacio
-st.text_input("Enviar pulso a AETERNA...", placeholder="Escribe tu comando aquí, Arquitecto...", key="chat_input")
+with col_main:
+    # Mostrar Imagen
+    if os.path.exists("CUPULA_369.png"):
+        st.image("CUPULA_369.png", use_container_width=True)
+    
+    # Espacio pequeño
+    st.markdown("<div style='margin-top:15px;'></div>", unsafe_allow_html=True)
 
-st.markdown("<p style='text-align:center; font-size:10px; color:#555; margin-top:5px;'>PALMETTO BAY SOBERANA</p>", unsafe_allow_html=True)
+    # TRÍADA DE PODER (Ahora justo debajo de la imagen)
+    c1, c2, c3 = st.columns(3)
+    with c1:
+        st.markdown("<p class='label-gold'>🌌 NVDA</p>", unsafe_allow_html=True)
+        st.progress(95)
+    with c2:
+        st.markdown("<p class='label-gold'>🔬 ASML</p>", unsafe_allow_html=True)
+        st.progress(100)
+    with c3:
+        st.markdown("<p class='label-gold'>💰 CAPITAL</p>", unsafe_allow_html=True)
+        st.progress(90)
+
+    # Chat integrado
+    st.markdown("<div style='margin-top:10px;'></div>", unsafe_allow_html=True)
+    st.text_input("Enviar pulso a AETERNA...", key="cmd", placeholder="Comandos del Arquitecto...")
+
+st.markdown("<p style='text-align:center; color:#444; font-size:10px;'>SISTEMA SOBERANO ACTIVADO</p>", unsafe_allow_html=True)

@@ -2,142 +2,83 @@ import streamlit as st
 import os
 import base64
 
-# --- 1. CONFIGURACIÓN SOBERANA (EXPANSIÓN TOTAL) ---
-st.set_page_config(
-    page_title="AETERNA 369",
-    layout="wide", # <-- Clave 1: Ocupar todo el ancho del monitor HP
-    initial_sidebar_state="collapsed"
-)
+# --- 1. CONFIGURACIÓN ---
+st.set_page_config(page_title="AETERNA 369", layout="wide", initial_sidebar_state="collapsed")
 
-# --- 2. CSS DE CONTROL DE FRANJA PANORÁMICA ---
+# --- 2. CSS DE DISEÑO PANORÁMICO Y COMPACTO ---
 st.markdown("""
 <style>
-    /* Forzar fondo negro y eliminar scroll del navegador */
     .stApp { background-color: #000000; color: #d4af37; overflow: hidden !important; }
-    
-    /* Eliminar TODOS los márgenes y paddings de Streamlit */
-    .block-container { 
-        padding: 0rem !important; 
-        max-width: 100% !important; 
-        margin: 0 !important;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: center;
-    }
+    .block-container { padding: 0.5rem !important; max-width: 100% !important; }
 
-    /* Título minimalistico y pegado arriba */
-    .header-369 {
-        text-align: center;
-        color: #d4af37;
-        font-size: 1rem;
-        margin: 0;
-        padding: 2px 0;
-        text-shadow: 0 0 10px #d4af37;
-        font-family: monospace;
-    }
-
-    /* IMAGEN: Compresión vertical extrema (25vh) y expansión horizontal (95%) */
-    .img-box {
-        text-align: center;
-        width: 95% !important; /* <-- Clave 2: Panel casi al ancho total */
-        margin: 0 auto;
-        padding: 0;
-    }
+    /* Imagen Panorámica */
     .stImage > img {
-        display: block;
-        margin: 0 auto;
-        max-height: 25vh !important; /* <-- Clave 3: Ultra-bajo, solo 30% de altura */
-        width: auto !important; /* Mantiene proporción */
+        display: block; margin: 0 auto;
+        max-height: 22vh !important; 
+        width: 90% !important;
+        object-fit: contain;
         border: 1px solid #d4af37;
-        box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
     }
 
-    /* TABLERO DE DATOS (Pegado a la imagen) */
-    .stProgress { margin-top: -8px !important; margin-bottom: 0 !important; } /* Sube las barras */
+    /* Barras y Chat Pegados */
+    .stProgress { margin-top: -10px !important; }
     .stProgress > div > div > div > div { background-color: #d4af37 !important; height: 6px !important; }
-    .label-gold { color: #d4af37; font-size: 0.7rem; text-align: center; margin: 0; padding: 0; font-family: monospace;}
+    .label-gold { color: #d4af37; font-size: 0.75rem; text-align: center; margin: 0; font-family: monospace; }
     
-    /* CHAT DE COMANDOS (Compacto y pegado a las barras) */
-    div[data-testid="stTextInput"] { 
-        margin-top: -10px !important; 
-        padding: 0 15% !important; /* Centra el chat ligeramente */
-    }
+    .stTextInput { margin-top: -10px !important; padding: 0 20% !important; }
     .stTextInput>div>div>input {
         background-color: #050505 !important;
         color: #d4af37 !important;
         border: 1px solid #d4af37 !important;
-        height: 1.5rem !important; /* Altura del chat más baja */
-        font-size: 12px !important;
+        height: 1.6rem !important;
     }
-    
-    /* BOTÓN DE AUDIO CENTRAL BAJO */
-    .audio-trigger {
-        display: block;
-        width: 160px;
-        margin: 5px auto;
-        padding: 5px;
-        background: #000;
-        color: #d4af37;
-        border: 1px solid #d4af37;
-        text-align: center;
-        cursor: pointer;
-        font-family: monospace;
-        font-size: 10px;
-        font-weight: bold;
-        text-shadow: 0 0 5px #d4af37;
-    }
-    .audio-trigger:hover { background: #d4af37; color: #000; }
 
+    /* Botón de Audio Centralizado Abajo */
+    .audio-trigger {
+        display: block; width: 180px; margin: 15px auto; padding: 8px;
+        background: #000; color: #d4af37; border: 1px solid #d4af37;
+        text-align: center; cursor: pointer; font-family: monospace;
+        font-size: 11px; font-weight: bold; border-radius: 4px;
+    }
 </style>
 """, unsafe_allow_html=True)
 
-# --- 3. CONSTRUCCIÓN DE LA INTERFAZ PANORÁMICA ---
+st.markdown("<h3 style='text-align:center; color:#d4af37; font-size:1.1rem; margin:0;'>AETERNA 369</h3>", unsafe_allow_html=True)
 
-# A. Título pegado arriba
-st.markdown("<div class='header-369'>SISTEMA AETERNA 369 - NODO SOBERANO</div>", unsafe_allow_html=True)
+# --- 3. VERIFICACIÓN DE IMAGEN ---
+if os.path.exists("CUPULA_369.png"):
+    st.image("CUPULA_369.png")
+else:
+    st.markdown("<p style='text-align:center; color:gray; font-size:10px;'>[ MATRIZ VISUAL EN ESPERA DE SINCRONIZACIÓN ]</p>", unsafe_allow_html=True)
 
-# B. Imagen de la Cúpula (Ancha y bajita)
-with st.container():
-    # Usamos columnas para forzar el ancho
-    col_img = st.columns([0.25, 9.5, 0.25]) # [2.5%, 95%, 2.5%]
-    with col_img[1]:
-        if os.path.exists("CUPULA_369.png"):
-            st.image("CUPULA_369.png", use_container_width=True)
-        else:
-            st.warning("Matriz visual de la Cúpula no encontrada.")
+# --- 4. TABLERO DE DATOS ---
+c1, c2, c3 = st.columns(3)
+with c1:
+    st.markdown("<p class='label-gold'>NVDA</p>", unsafe_allow_html=True)
+    st.progress(95)
+with c2:
+    st.markdown("<p class='label-gold'>ASML</p>", unsafe_allow_html=True)
+    st.progress(100)
+with c3:
+    st.markdown("<p class='label-gold'>CAPITAL</p>", unsafe_allow_html=True)
+    st.progress(90)
 
-# C. Tríada de Poder (Fila única de datos)
-with st.container():
-    col_data = st.columns([1, 8, 1]) # Margen lateral del 10% para los datos
-    with col_data[1]:
-        # NVDA, ASML, CAPITAL
-        c1, c2, c3 = st.columns(3)
-        with c1:
-            st.markdown("<p class='label-gold'>🌌 NVDA</p>", unsafe_allow_html=True)
-            st.progress(95)
-        with c2:
-            st.markdown("<p class='label-gold'>🔬 ASML</p>", unsafe_allow_html=True)
-            st.progress(100)
-        with c3:
-            st.markdown("<p class='label-gold'>💰 CAPITAL</p>", unsafe_allow_html=True)
-            st.progress(90)
+st.text_input("", placeholder="COMANDO SOBERANO...", key="final_cmd")
 
-# D. Chat de Comandos (Pegado a las barras)
-st.text_input("AETERNA:", placeholder="Introduce comandos del Arquitecto...", key="cmd_panoramic")
-
-
-# E. MOTOR DE AUDIO (UBICADO AL FINAL Y CENTRAL)
+# --- 5. MOTOR DE AUDIO REFORZADO ---
 if os.path.exists("latido_369.mp3"):
     with open("latido_369.mp3", "rb") as f:
         data = f.read()
         b64 = base64.b64encode(data).decode()
-        st.markdown(f"""
+        audio_html = f"""
             <audio id="audio_core" loop><source src="data:audio/mp3;base64,{b64}" type="audio/mp3"></audio>
-            <div class="audio-trigger" onclick="document.getElementById('audio_core').play(); this.innerText='PULSO ACTIVADO'">
+            <div class="audio-trigger" id="btn-audio"
+                 onclick="var a=document.getElementById('audio_core'); a.play(); this.innerText='PULSO ACTIVO'; this.style.color='#00ff00';">
                 ACTIVAR PULSO SONORO
             </div>
-        """, unsafe_allow_html=True)
+        """
+        st.markdown(audio_html, unsafe_allow_html=True)
+else:
+    st.markdown("<p style='text-align:center; color:#333; font-size:9px;'>PULSO SONORO NO DETECTADO</p>", unsafe_allow_html=True)
 
-st.markdown("<p style='text-align:center; color:#222; font-size:7px; margin:0;'>PALMETTO BAY</p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align:center; color:#222; font-size:8px;'>PALMETTO BAY SOBERANA</p>", unsafe_allow_html=True)

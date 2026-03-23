@@ -48,7 +48,7 @@ st.markdown("""
     .stImage > img {
         display: block;
         margin: 0 auto;
-        max-height: 25vh !important; /* <-- Clave 3: Ultra-bajo, solo 20% de altura */
+        max-height: 25vh !important; /* <-- Clave 3: Ultra-bajo, solo 30% de altura */
         width: auto !important; /* Mantiene proporción */
         border: 1px solid #d4af37;
         box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);

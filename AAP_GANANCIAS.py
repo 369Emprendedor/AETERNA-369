@@ -1,76 +1,84 @@
 import streamlit as st
 import os
 import base64
-from openai import OpenAI
 
-# --- CONFIGURACIÓN ---
+# --- CONFIGURACIÓN DE PANTALLA COMPACTA ---
 st.set_page_config(page_title="AETERNA 369", layout="wide", initial_sidebar_state="collapsed")
 
-# --- MOTOR DE AUDIO (VERSIÓN INYECTADA) ---
-def reproducir_latido():
-    file_path = "latido_369.mp3"
-    if os.path.exists(file_path):
-        with open(file_path, "rb") as f:
+# --- CSS PARA FORZAR EL AJUSTE AL MONITOR ---
+st.markdown("""
+<style>
+    /* Eliminar espacios sobrantes */
+    .block-container { padding-top: 1rem; padding-bottom: 0rem; height: 100vh; }
+    .stApp { background-color: #000000; color: #d4af37; overflow: hidden; }
+    
+    /* Título Ajustado */
+    .glow-title { 
+        text-align: center; 
+        color: #d4af37; 
+        font-size: 24px !important; 
+        text-shadow: 0 0 10px #d4af37; 
+        margin-bottom: 0px; 
+    }
+    
+    /* Imagen Contenida */
+    .img-container { text-align: center; }
+    .stImage > img { 
+        max-height: 45vh; 
+        width: auto; 
+        margin-left: auto; 
+        margin-right: auto; 
+        border: 1px solid #d4af37;
+        box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+    }
+</style>
+""", unsafe_allow_html=True)
+
+# --- MOTOR DE AUDIO ---
+def cargar_audio():
+    if os.path.exists("latido_369.mp3"):
+        with open("latido_369.mp3", "rb") as f:
             data = f.read()
             b64 = base64.b64encode(data).decode()
-            # HTML directo con script de auto-reproducción al primer clic en cualquier parte
-            audio_html = f"""
-                <audio id="miAudio" loop>
-                    <source src="data:audio/mp3;base64,{b64}" type="audio/mp3">
-                </audio>
-                <div id="click-layer" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:9999;cursor:pointer;display:block;">
-                    <p style="color:#d4af37; text-align:center; margin-top:20%; font-family:monospace;">
-                        [ CLICK PARA ACTIVAR PULSO SOBERANO ]
-                    </p>
+            st.markdown(f"""
+                <audio id="audio-latido" loop><source src="data:audio/mp3;base64,{b64}" type="audio/mp3"></audio>
+                <div id="btn-audio" style="position:fixed; top:10px; right:10px; cursor:pointer; z-index:999; font-size:12px; border:1px solid #d4af37; padding:5px;">
+                    [ SONIDO: OFF/ON ]
                 </div>
                 <script>
-                    const layer = document.getElementById('click-layer');
-                    const audio = document.getElementById('miAudio');
-                    layer.addEventListener('click', function() {{
-                        audio.play();
-                        layer.style.display = 'none'; // Desaparece el mensaje tras el clic
+                    const audio = document.getElementById("audio-latido");
+                    document.getElementById("btn-audio").addEventListener('click', function() {{
+                        if (audio.paused) {{ audio.play(); this.innerText = "[ SONIDO: ON ]"; }}
+                        else {{ audio.pause(); this.innerText = "[ SONIDO: OFF ]"; }}
                     }});
                 </script>
-            """
-            st.markdown(audio_html, unsafe_allow_html=True)
-    else:
-        st.error("Archivo latido_369.mp3 no encontrado en el servidor.")
+            """, unsafe_allow_html=True)
 
-# --- ESTILO ---
-st.markdown("<style>.stApp { background-color: #000000; color: #d4af37; }</style>", unsafe_allow_html=True)
+cargar_audio()
 
-# ACTIVAR AUDIO PRIMERO
-reproducir_latido()
+# --- INTERFAZ COMPACTA ---
+st.markdown("<h1 class='glow-title'>SISTEMA AETERNA 369</h1>", unsafe_allow_html=True)
 
-# --- CONTENIDO VISUAL ---
-st.markdown("<h1 style='text-align:center; color:#d4af37; text-shadow: 0 0 15px #d4af37;'>SISTEMA AETERNA 369</h1>", unsafe_allow_html=True)
-
+# Imagen de la Cúpula (Tamaño controlado)
 if os.path.exists("CUPULA_369.png"):
-    st.image("CUPULA_369.png", use_container_width=True)
+    st.image("CUPULA_369.png")
 
-st.markdown("---")
+st.markdown("<br>", unsafe_allow_html=True)
 
-# --- LA TRÍADA DE PODER ---
+# --- TRÍADA DE PODER (EN UNA SOLA FILA) ---
 col1, col2, col3 = st.columns(3)
 with col1:
-    st.write("🌌 **NVDA (GPU)**")
+    st.markdown("<p style='text-align:center; font-size:14px;'>🌌 NVDA</p>", unsafe_allow_html=True)
     st.progress(95)
 with col2:
-    st.write("🔬 **ASML (LITOGRAFÍA)**")
+    st.markdown("<p style='text-align:center; font-size:14px;'>🔬 ASML</p>", unsafe_allow_html=True)
     st.progress(100)
 with col3:
-    st.write("💰 **CAPITAL SOBERANO**")
+    st.markdown("<p style='text-align:center; font-size:14px;'>💰 CAPITAL</p>", unsafe_allow_html=True)
     st.progress(90)
 
+# --- CHAT COMPACTO ---
 st.markdown("---")
+st.text_input("Enviar pulso a AETERNA...", placeholder="Escribe aquí...")
 
-# --- CHAT ---
-API_KEY = "TU_CLAVE_AQUI" 
-if API_KEY == "TU_CLAVE_AQUI":
-    st.warning("⚠️ Esperando conexión neuronal (API Key).")
-else:
-    # (Aquí iría el resto del código del chat que ya tienes)
-    st.success("Cerebro conectado.")
-
-if st.button("🔄 REINICIAR CÚPULA"):
-    st.rerun()
+st.markdown("<p style='text-align:center; font-size:10px; color:#555;'>NODO 001 - PALMETTO BAY</p>", unsafe_allow_html=True)

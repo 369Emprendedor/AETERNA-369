@@ -18,7 +18,7 @@ st.markdown("""
     .stImage > img {
         display: block;
         margin: 0 auto;
-        max-height: 30vh !important; /* Ajuste manual: 30% de la pantalla */
+        max-height: 20vh !important; /* Ajuste manual: 20% de la pantalla */
         width: auto !important;
         border: 1px solid #d4af37;
     }

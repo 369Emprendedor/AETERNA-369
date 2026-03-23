@@ -5,69 +5,82 @@ import base64
 # --- CONFIGURACIÓN DE PANTALLA ---
 st.set_page_config(page_title="AETERNA 369", layout="wide", initial_sidebar_state="collapsed")
 
-# --- CSS DE CONTROL TOTAL ---
+# --- CSS RADICAL PARA MONITORES (SIN SCROLL) ---
 st.markdown("""
 <style>
+    /* Forzar fondo y ocultar barras de scroll */
     .stApp { background-color: #000000; color: #d4af37; overflow: hidden !important; }
     .block-container { padding: 1rem !important; }
-    
-    /* Forzar que todo esté centrado y quepa en el monitor */
-    .main-box {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
+
+    /* Título compacto */
+    .header-369 {
+        text-align: center;
+        color: #d4af37;
+        font-size: 1.2rem;
+        text-shadow: 0 0 10px #d4af37;
+        margin-bottom: 5px;
     }
 
-    /* IMAGEN: Aquí es donde ajustamos para que no tape las barras */
+    /* IMAGEN: Forzamos tamaño pequeño para que suba todo */
     .stImage > img {
-        max-height: 30vh !important; /* Solo ocupa el 40% de la altura del monitor */
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        max-height: 35vh !important; /* Ajuste a 35% de la pantalla */
         width: auto !important;
         border: 1px solid #d4af37;
-        box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
     }
 
-    /* Barras de progreso doradas */
-    .stProgress > div > div > div > div { background-color: #d4af37 !important; height: 12px !important; }
-    p { color: #d4af37 !important; font-family: monospace; margin-bottom: 2px !important; font-size: 14px; }
+    /* Barras de progreso y etiquetas */
+    .stProgress > div > div > div > div { background-color: #d4af37 !important; }
+    .label-prog { color: #d4af37; font-size: 0.8rem; text-align: center; margin-bottom: 0px; }
+
+    /* Input de chat: Forzar visibilidad */
+    .stTextInput > div > div > input {
+        background-color: #111 !important;
+        color: #d4af37 !important;
+        border: 1px solid #d4af37 !important;
+    }
 </style>
 """, unsafe_allow_html=True)
 
-# --- SISTEMA DE AUDIO (INYECTADO) ---
+# --- BOTÓN DE AUDIO (FLOTANTE E INFALIBLE) ---
 if os.path.exists("latido_369.mp3"):
     with open("latido_369.mp3", "rb") as f:
         data = f.read()
         b64 = base64.b64encode(data).decode()
         st.markdown(f"""
-            <audio id="audio" loop><source src="data:audio/mp3;base64,{b64}" type="audio/mp3"></audio>
-            <div onclick="document.getElementById('audio').play()" style="position:fixed; top:10px; right:10px; color:#d4af37; cursor:pointer; border:1px solid #d4af37; padding:5px; z-index:1000; font-size:10px;">
-                [ ACTIVAR PULSO ]
+            <audio id="audio_core" loop><source src="data:audio/mp3;base64,{b64}" type="audio/mp3"></audio>
+            <div id="trigger" onclick="document.getElementById('audio_core').play(); this.style.color='#00ff00'; this.innerText='[ PULSO ACTIVO ]'" 
+                 style="position:fixed; top:10px; right:10px; color:#d4af37; cursor:pointer; border:2px solid #d4af37; padding:10px; z-index:9999; background:black; font-family:monospace; font-size:12px;">
+                [ ACTIVAR AUDIO ]
             </div>
         """, unsafe_allow_html=True)
 
-# --- CUERPO DE LA INTERFAZ ---
-st.markdown("<h2 style='text-align:center; color:#d4af37;'>SISTEMA AETERNA 369 - NODO 001</h2>", unsafe_allow_html=True)
+# --- CONTENIDO DE LA INTERFAZ ---
+st.markdown("<div class='header-369'>SISTEMA AETERNA 369 - NODO 001</div>", unsafe_allow_html=True)
 
-# 1. Imagen Central
+# Imagen
 if os.path.exists("CUPULA_369.png"):
     st.image("CUPULA_369.png")
 
+# Espaciador mínimo
 st.markdown("<div style='margin-top:10px;'></div>", unsafe_allow_html=True)
 
-# 2. Tríada de Poder (Ahora en una fila horizontal clara)
-col1, col2, col3 = st.columns(3)
-with col1:
-    st.markdown("<p style='text-align:center;'>🌌 NVDA (GPU)</p>", unsafe_allow_html=True)
+# Tríada de Poder
+c1, c2, c3 = st.columns(3)
+with c1:
+    st.markdown("<p class='label-prog'>🌌 NVDA</p>", unsafe_allow_html=True)
     st.progress(95)
-with col2:
-    st.markdown("<p style='text-align:center;'>🔬 ASML (PHOTO)</p>", unsafe_allow_html=True)
+with c2:
+    st.markdown("<p class='label-prog'>🔬 ASML</p>", unsafe_allow_html=True)
     st.progress(100)
-with col3:
-    st.markdown("<p style='text-align:center;'>💰 CAPITAL (USD)</p>", unsafe_allow_html=True)
+with c3:
+    st.markdown("<p class='label-prog'>💰 CAPITAL</p>", unsafe_allow_html=True)
     st.progress(90)
 
-# 3. Chat de Comandos (Visible al final)
-st.markdown("<div style='margin-top:10px;'></div>", unsafe_allow_html=True)
-st.text_input("Enviar pulso a AETERNA...", key="main_cmd", placeholder="Introduce comandos, Arquitecto...")
+# Input de Chat (Ahora debe verse sí o sí)
+st.markdown("<div style='margin-top:15px;'></div>", unsafe_allow_html=True)
+comando = st.text_input("COMANDO SOBERANO:", placeholder="Escribe al pulso de AETERNA...", key="input_soberano")
 
-st.markdown("<p style='text-align:center; color:#333; font-size:10px;'>PALMETTO BAY SOBERANA</p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align:center; color:#444; font-size:10px; margin-top:10px;'>CONEXIÓN PALMETTO BAY ESTABLE</p>", unsafe_allow_html=True)

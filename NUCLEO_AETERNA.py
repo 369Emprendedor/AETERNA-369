@@ -10,7 +10,7 @@ st.set_page_config(page_title="AETERNA 369 - NODO 001", layout="wide", initial_s
 ARQUITECTO = "YUNIERT MERINO ORO"
 SISTEMA = "PROYECTO 369 EMPRENDEDOR"
 GUIA = "AETERNA"
-ACTIVOS_CLAVE = ["ASML", "NVIDIA", "IWM"]
+ACTIVOS_CLAVE = ["ASML", "NVDA", "IWM"]
 NODO_ID = "NODO_001_PALMETTO_BAY"
 
 # --- INTERFAZ BIOLÓGICA (CSS DORADO Y NEGRO) ---
@@ -51,7 +51,7 @@ def cargar_audio_local(file_path):
             st.markdown(md, unsafe_allow_html=True)
 
 # Iniciar latido atmosférico
-# cargar_audio_local("latido_369.mp3")
+ cargar_audio_local("latido_369.mp3")
 
 # --- CUERPO DEL SISTEMA ---
 st.markdown(f"<h1 class='glow-text'>{SISTEMA}</h1>", unsafe_allow_html=True)

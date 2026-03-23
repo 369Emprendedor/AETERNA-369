@@ -56,19 +56,17 @@ st.markdown("""
         margin-bottom: 10px;
     }
     .stImage > img {
-        max-height: 45vh !important; /* Ajuste manual de altura: 45% del monitor */
+        max-height: 30vh !important; /* Ajuste manual de altura: 30% del monitor */
         width: auto !important;
         border: 2px solid #d4af37;
         box-shadow: 0 0 25px rgba(212, 175, 55, 0.4);
     }
-
     /* BARRAS DE PROGRESO Y ETIQUETAS (En la zona visible) */
     .progress-box {
-        width: 75%; /* Ligeramente más estrecho que la imagen para estética */
+        width: 55%; /* Ligeramente más estrecho que la imagen para estética */
     }
     .stProgress > div > div > div > div { background-color: #d4af37 !important; height: 10px !important; }
     .label-gold { color: #d4af37; font-size: 0.85rem; text-align: center; font-family: monospace; margin: 0; }
-    
     /* Input de Chat visible */
     .stTextInput > div > div > input {
         background-color: #050505 !important;

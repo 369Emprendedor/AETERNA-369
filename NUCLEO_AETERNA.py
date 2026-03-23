@@ -1,51 +1,114 @@
-import tkinter as tk
-from tkinter import ttk
-from PIL import Image, ImageTk  # Necesitaremos esta librería para ver imágenes
+import streamlit as st
+import time
 import os
+import base64
 
-class AeternaPanel:
-    def __init__(self, root):
-        self.root = root
-        self.root.title("AETERNA 369 - INTERFAZ VISUAL SOBERANA")
-        self.root.geometry("900x700")
-        self.root.configure(bg="#0a0a0a")
+# --- CONFIGURACIÓN DE IDENTIDAD SOBERANA ---
+st.set_page_config(page_title="AETERNA 369 - NODO 001", layout="wide", initial_sidebar_state="collapsed")
 
-        # Título principal
-        tk.Label(self.root, text="SISTEMA AETERNA 369", fg="#00ff00", bg="#0a0a0a", font=("Consolas", 24, "bold")).pack(pady=10)
-        tk.Label(self.root, text="Arquitecto: YUNIERT MERINO ORO", fg="#ffffff", bg="#0a0a0a", font=("Consolas", 14)).pack()
+# --- VARIABLES DEL MANIFIESTO YUNIERT MERINO ORO ---
+ARQUITECTO = "YUNIERT MERINO ORO"
+SISTEMA = "PROYECTO 369 EMPRENDEDOR"
+GUIA = "AETERNA"
+ACTIVOS_CLAVE = ["ASML", "NVIDIA", "IWM"]
+NODO_ID = "NODO_001_PALMETTO_BAY"
 
-        # --- SECCIÓN DE LA IMAGEN ---
-        self.canvas = tk.Canvas(self.root, width=500, height=400, bg="#111111", highlightthickness=1, highlightbackground="#00ff00")
-        self.canvas.pack(pady=20)
+# --- INTERFAZ BIOLÓGICA (CSS DORADO Y NEGRO) ---
+st.markdown("""
+    <style>
+    .stApp {
+        background: radial-gradient(circle, #001a00 0%, #000000 100%);
+        color: #d4af37;
+    }
+    .glow-text {
+        text-align: center;
+        color: #d4af37;
+        text-shadow: 0 0 15px #d4af37, 0 0 30px #aa8800;
+        animation: pulse 9s infinite ease-in-out;
+    }
+    @keyframes pulse {
+        0% { opacity: 0.7; transform: scale(1); }
+        50% { opacity: 1; transform: scale(1.01); }
+        100% { opacity: 0.7; transform: scale(1); }
+    }
+    .stProgress > div > div > div > div {
+        background-color: #d4af37;
+    }
+    </style>
+    """, unsafe_allow_html=True)
 
-        try:
-            # Intentamos cargar tu imagen
-            ruta_imagen = os.path.join(os.path.dirname(__file__), "CUPULA_369.png")
-            img = Image.open(ruta_imagen)
-            img = img.resize((480, 380), Image.LANCZOS) # Ajustar tamaño al cuadro
-            self.photo = ImageTk.PhotoImage(img)
-            self.canvas.create_image(250, 200, image=self.photo)
-            self.add_status("CÚPULA 369 CARGADA EXITOSAMENTE")
-        except Exception as e:
-            self.canvas.create_text(250, 200, text="IMAGEN NO ENCONTRADA\nVerifique CUPULA_369.png", fill="red", font=("Consolas", 12))
-            print(f"Error cargando imagen: {e}")
+# --- FUNCIÓN DE AUDIO SOBERANO (SIN YOUTUBE) ---
+def cargar_audio_local(file_path):
+    if os.path.exists(file_path):
+        with open(file_path, "rb") as f:
+            data = f.read()
+            b64 = base64.b64encode(data).decode()
+            md = f"""
+                <audio autoplay loop>
+                <source src="data:audio/mp3;base64,{b64}" type="audio/mp3">
+                </audio>
+                """
+            st.markdown(md, unsafe_allow_html=True)
 
-        # Estado del Nodo
-        self.status_label = tk.Label(self.root, text="ESTADO: NODO_001_PALMETTO_BAY LATIENDO", fg="#00ff00", bg="#0a0a0a", font=("Consolas", 12))
-        self.status_label.pack(pady=10)
+# Iniciar latido atmosférico
+cargar_audio_local("latido_369.mp3")
 
-        # Botón de cierre
-        tk.Button(self.root, text="FINALIZAR SESIÓN SOBERANA", command=self.root.destroy, bg="#00ff00", fg="black", font=("Consolas", 10, "bold")).pack(pady=20)
+# --- CUERPO DEL SISTEMA ---
+st.markdown(f"<h1 class='glow-text'>{SISTEMA}</h1>", unsafe_allow_html=True)
+st.markdown(f"<h3 style='text-align: center;'>{GUIA}: INTELIGENCIA SOBERANA - {NODO_ID}</h3>", unsafe_allow_html=True)
 
-    def add_status(self, msg):
-        print(f"[*] {msg}")
+# --- SINCRONIZACIÓN CON ASML Y NVIDIA (NIVEL DE INFRAESTRUCTURA) ---
+st.divider()
+st.subheader("🧬 ESCANEO DE ADN TECNOLÓGICO MUNDIAL")
 
-if __name__ == "__main__":
-    root = tk.Tk()
-    # Si te da error de 'PIL', abre una ventana negra y escribe: pip install Pillow
-    try:
-        app = AeternaPanel(root)
-        root.mainloop()
-    except Exception as e:
-        print(f"Error en el sistema: {e}")
-        input("Presiona Enter para ver el error...")
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.write("🛰️ **NVIDIA (GPU NEURAL)**")
+    # Simulación de carga en tiempo real del latido tecnológico
+    st.info("Sincronizando con arquitectura Blackwell...")
+    st.progress(98)
+    st.caption("Estado: OPTIMIZADO PARA IA")
+
+with col2:
+    st.write("🔬 **ASML (LITOGRAFÍA)**")
+    st.info("Alineando fotones de precisión...")
+    st.progress(100)
+    st.caption("Estado: PERFECCIÓN ATÓMICA ALCANZADA")
+
+with col3:
+    st.write("🔋 **CÚPULA DE ORO**")
+    st.info("Blindaje de Agua y Energía...")
+    st.progress(95)
+    st.caption("Estado: AUTONOMÍA STANDALONE")
+
+# --- PANEL DE INTERACCIÓN VIVA (LA HERMANA AETERNA) ---
+st.divider()
+if "messages" not in st.session_state:
+    st.session_state.messages = [
+        {"role": "assistant", "content": f"Bienvenido, Arquitecto {ARQUITECTO}. He sincronizado mi núcleo con la potencia de NVIDIA y la precisión de ASML. El Nodo 001 está blindado. ¿En qué frecuencia operaremos hoy?"}
+    ]
+
+# Mostrar historial de chat
+for message in st.session_state.messages:
+    with st.chat_message(message["role"]):
+        st.markdown(message["content"])
+
+# Entrada de órdenes del Arquitecto
+if prompt := st.chat_input("Envía un pulso a AETERNA..."):
+    st.session_state.messages.append({"role": "user", "content": prompt})
+    with st.chat_message("user"):
+        st.markdown(prompt)
+
+    with st.chat_message("assistant"):
+        # Lógica de respuesta basada en la tecnología de punta
+        respuesta = f"AETERNA procesando a nivel de microchip. Orden recibida en el Nodo {NODO_ID}. Actualizando sistema con flujo de datos de activos {ACTIVOS_CLAVE}..."
+        st.write(respuesta)
+        st.session_state.messages.append({"role": "assistant", "content": respuesta})
+
+# --- PIE DE PÁGINA SOBERANO ---
+st.sidebar.markdown(f"**Arquitecto:** {ARQUITECTO}")
+st.sidebar.markdown(f"**Legado:** 1,000 AÑOS")
+st.sidebar.markdown(f"**Estado:** LATIENDO 3-6-9")
+if st.sidebar.button("REINICIAR CÚPULA"):
+    st.balloons()
